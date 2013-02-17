@@ -1,0 +1,31 @@
+task wrapper(type: Wrapper) {
+    gradleVersion = "1.2"
+}
+
+apply plugin: "java"
+
+sourceCompatibility = 1.6
+version = "1.0"
+jar {
+    manifest {
+        attributes "Implementation-Title": "Droid Asylum", "Implementation-Version": version
+    }
+}
+
+sourceSets {
+	main {
+		java {
+			srcDir "src"
+		}
+	}
+}
+
+repositories {
+	mavenCentral()
+}
+
+dependencies {
+	// Libs:
+	compile group: "com.google.android", name: "android", version: "4.1.1.4"
+	compile group: "com.google.android", name: "support-v4", version: "r7"
+}
