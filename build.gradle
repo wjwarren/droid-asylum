@@ -1,5 +1,5 @@
 task wrapper(type: Wrapper) {
-    gradleVersion = "1.2"
+    gradleVersion = "1.4"
 }
 
 apply plugin: "java"
@@ -29,6 +29,8 @@ repositories {
 
 dependencies {
 	// Libs:
-	compile group: "com.google.android", name: "android", version: "4.1.1.4"
+	// Android API lvl 8
+	compile group: "com.google.android", name: "android", version: "2.2.1"
+	// Android support v4
 	compile group: "com.google.android", name: "support-v4", version: "r7"
 }
