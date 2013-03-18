@@ -1,5 +1,9 @@
+# Gradle
 .gradle/
-bin/
 build/
+
+# Android
+bin/
 gen/
 libs/
+*.bc
