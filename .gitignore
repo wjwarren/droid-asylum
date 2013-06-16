@@ -4,6 +4,15 @@ build/
 
 # Android
 bin/
+compile-libs/
 gen/
 libs/
 *.bc
+
+# Eclipse
+.classpath
+.project
+project.properties
+
+# IntelliJ
+*.iml
