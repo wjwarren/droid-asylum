@@ -58,7 +58,7 @@ public class UrlLoader {
 	 * @param stream The stream to read from.
 	 * @param charset The Charset of the data on the stream.
 	 * 
-	 * @throws IOException
+	 * @throws java.io.IOException
 	 */
 	private String readStreamAsString(InputStream stream, Charset charset) throws IOException {
 		stringBuilder.delete(0, stringBuilder.length());
@@ -102,7 +102,7 @@ public class UrlLoader {
 	 * @param url The URL to download the resource from.
 	 * @param charset The Charset to use for the String.
 	 * 
-	 * @throws UrlLoadException
+	 * @throws nl.ansuz.android.asylum.net.UrlLoadException
 	 */
 	private <T> T loadUrl(T result, String url, Charset charset) throws UrlLoadException {
 		try {
@@ -139,7 +139,7 @@ public class UrlLoader {
 	 * @param url The URL to download the resource from.
 	 * @param charset The Charset to use for the String.
 	 * 
-	 * @throws UrlLoadException
+	 * @throws nl.ansuz.android.asylum.net.UrlLoadException
 	 */
 	public String loadUrlAsString(String url, Charset charset) throws UrlLoadException {
 		return loadUrl("", url, charset);
@@ -150,7 +150,7 @@ public class UrlLoader {
 	 * 
 	 * @param url The URL to download the resource from.
 	 * 
-	 * @throws UrlLoadException
+	 * @throws nl.ansuz.android.asylum.net.UrlLoadException
 	 */
 	public Bitmap loadUrlAsImage(String url) throws UrlLoadException {
 		return loadUrl(Bitmap.createBitmap(1, 1, Bitmap.Config.ARGB_8888), url, null);
