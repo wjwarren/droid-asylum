@@ -145,26 +145,44 @@ public class DownloadEvent implements Parcelable {
 		}
 	}
 
+	/**
+	 * @return Action - The action that was taken.
+	 */
 	public Action getAction() {
 		return action;
 	}
 
+	/**
+	 * @return String - The URL for the download.
+	 */
 	public String getUrl() {
 		return url;
 	}
 
+	/**
+	 * @return ResourceType - Type of resource that we're dealing with.
+	 */
 	public ResourceType getResourceType() {
 		return resourceType;
 	}
 
+	/**
+	 * @return String - Download result.
+	 */
 	public String getPlainTextData() {
 		return plainTextData;
 	}
 
+	/**
+	 * @return Bitmap - The downloaded image.
+	 */
 	public Bitmap getImageData() {
 		return imageData;
 	}
 
+	/**
+	 * @return String - Error message, if there was a problem with the download.
+	 */
 	public String getErrorText() {
 		return errorText;
 	}
