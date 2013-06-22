@@ -1,5 +1,9 @@
 package nl.ansuz.android.asylum.utils;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.Locale;
+
 /**
  * Collection of Data and/or Time utilities.
  *
@@ -35,5 +39,23 @@ public class DateTimeUtils {
 		}
 
 		return formattedDuration;
+	}
+
+	/**
+	 * Formats a Unix timestamp in something human readable.
+	 *
+	 * @see http://docs.oracle.com/javase/1.4.2/docs/api/java/text/SimpleDateFormat.html
+	 *
+	 * @param timestamp int - Unix timestamp (in seconds).
+	 * @param pattern String - Pattern to use to format the date and time.
+	 *
+	 * @return Formatted date and time.
+	 */
+	public static String formatDateAndTime(int timestamp, String pattern) {
+		long time = timestamp * ONE_SECOND;
+		Date date = new Date(time);
+
+		SimpleDateFormat formattedDate = new SimpleDateFormat(pattern, Locale.getDefault());
+		return formattedDate.format(date);
 	}
 }
