@@ -36,23 +36,6 @@ public class DownloadService extends Service {
 	private Binder binder;
 
 	/**
-	 * Enables HTTP response caching.
-	 * 
-	 * @see http://android-developers.blogspot.se/2011/09/androids-http-clients.html
-	 */
-	private void enableResponseCache() {
-		try {
-			long httpCacheSize = 10 * 1024 * 1024; // 10 MiB
-			File httpCacheDir = new File(getCacheDir(), "http");
-			Class.forName("android.net.http.HttpResponseCache")
-					.getMethod("install", File.class, long.class)
-					.invoke(null, httpCacheDir, httpCacheSize);
-		} catch (Exception httpResponseCacheNotAvailable) {
-			Log.d(LOG_TAG, "HTTP response cache is unavailable.");
-		}
-	}
-
-	/**
 	 * Analyses the passed in Intent and executes a method based on the Intent's
 	 * action.
 	 * 
@@ -132,7 +115,6 @@ public class DownloadService extends Service {
 
 		binder = new LocalBinder();
 
-		enableResponseCache();
 		createThreadPool();
 	}
 

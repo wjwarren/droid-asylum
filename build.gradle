@@ -1,5 +1,5 @@
 task wrapper(type: Wrapper) {
-    gradleVersion = "1.4"
+	gradleVersion = "1.4"
 }
 
 apply plugin: "java"
@@ -9,9 +9,9 @@ group = "nl.ansuz"
 version = "1.0"
 sourceCompatibility = 1.6
 jar {
-    manifest {
-        attributes "Implementation-Title": "Droid Asylum", "Implementation-Version": version
-    }
+	manifest {
+		attributes "Implementation-Title": "Droid Asylum", "Implementation-Version": version
+	}
 }
 
 sourceSets {
@@ -33,4 +33,7 @@ dependencies {
 	compile group: "com.google.android", name: "android", version: "2.2.1"
 	// Android support v4
 	compile group: "com.google.android", name: "support-v4", version: "r7"
+
+	// OkHttp
+	compile group: "com.squareup.okhttp", name: "okhttp", version: "1.1.1"
 }
