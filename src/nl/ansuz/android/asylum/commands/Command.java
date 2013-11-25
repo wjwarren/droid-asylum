@@ -5,14 +5,14 @@ package nl.ansuz.android.asylum.commands;
  *
  * @author Wijnand
  */
-public interface Command {
+public interface Command<ResponseType> {
 
 	/**
 	 * Executes this Command.
 	 *
-	 * @return T - Result of the execution.
+	 * @return ResponseType - Result of the execution.
 	 */
-	public <T> T execute() throws Exception;
+	public ResponseType execute() throws Exception;
 
 	/**
 	 * Cancels Command execution.
