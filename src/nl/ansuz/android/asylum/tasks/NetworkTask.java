@@ -17,7 +17,7 @@ public abstract class NetworkTask<Params, Progress, Result> extends DataTaskBase
 	@Inject
 	protected NetworkUtil networkUtil;
 
-	private UrlLoadException urlLoadException;
+	protected UrlLoadException urlLoadException;
 
 	/**
 	 * @see DataTaskBase#DataTaskBase(RunType)

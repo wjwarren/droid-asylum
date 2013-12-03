@@ -1,7 +1,7 @@
 package nl.ansuz.android.asylum.tasks;
 
 /**
- * Base Database task implementation. Extends thi class to perform a specific task.
+ * Base Database task implementation. Extends this class to perform a specific task.
  *
  * @author Wijnand
  */
