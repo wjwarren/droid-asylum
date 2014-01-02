@@ -12,7 +12,7 @@ import java.util.concurrent.Executor;
  */
 public abstract class DataTaskBase<Params, Progress, Result> extends AsyncTask<Params, Progress, Result> implements DataTask {
 
-	protected OnCompleteListener onCompleteListener;
+	protected OnCompleteListener<Result> onCompleteListener;
 	protected OnExceptionListener onExceptionListener;
 
 	private RunType runType;
