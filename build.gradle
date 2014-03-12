@@ -1,5 +1,5 @@
 task wrapper(type: Wrapper) {
-	gradleVersion = "1.8"
+	gradleVersion = "1.11"
 }
 
 apply plugin: "android-library"
@@ -11,17 +11,17 @@ buildscript {
 
 	dependencies {
 		// Android Gradle plugin.
-		classpath 'com.android.tools.build:gradle:0.6.1'
+		classpath 'com.android.tools.build:gradle:0.9+'
 	}
 }
 
 android {
-	compileSdkVersion 18
-	buildToolsVersion "18.1.1"
+	compileSdkVersion 19
+	buildToolsVersion "19.0.3"
 
 	defaultConfig {
 		minSdkVersion = 8
-		targetSdkVersion = 18
+		targetSdkVersion = 19
 
 		versionCode = "1"
 		versionName = "0.1"
