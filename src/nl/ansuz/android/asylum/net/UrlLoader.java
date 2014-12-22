@@ -13,6 +13,8 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.util.Log;
 import com.squareup.okhttp.OkHttpClient;
+import com.squareup.okhttp.Request;
+import com.squareup.okhttp.Response;
 
 /**
  * Loads a resource from a URL.
@@ -117,8 +119,13 @@ public class UrlLoader {
 		}
 
 		try {
-			urlConnection = okHttpClient.open(url);
-			InputStream input = new BufferedInputStream(urlConnection.getInputStream());
+			//urlConnection = okHttpClient.open(url);
+			Request request = new Request.Builder()
+					.url(url)
+					.build();
+			Response response = okHttpClient.newCall(request).execute();
+
+			InputStream input = response.body().byteStream();
 			if(result instanceof String) {
 				result = (T) readStreamAsString(input, charset);
 			} else if(result instanceof Bitmap) {
