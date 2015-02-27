@@ -16,12 +16,12 @@ buildscript {
 }
 
 android {
-	compileSdkVersion 19
-	buildToolsVersion "19.1.0"
+	compileSdkVersion 21
+	buildToolsVersion "21.1.2"
 
 	defaultConfig {
 		minSdkVersion 8
-		targetSdkVersion 19
+		targetSdkVersion 21
 
 		versionCode = "1"
 		versionName = "0.1"
@@ -46,8 +46,8 @@ repositories {
 
 dependencies {
 	// Libs:
-	// Android support v4
-	compile group: "com.android.support", name: "support-v4", version: "18.0.+"
+	// Android support v7
+	compile "com.android.support:appcompat-v7:+"
 
 	// OkHttp
 	compile group: "com.squareup.okhttp", name: "okhttp", version: "2.1.+"
