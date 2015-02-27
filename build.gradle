@@ -46,8 +46,8 @@ repositories {
 
 dependencies {
 	// Libs:
-	// Android support v7
-	compile "com.android.support:appcompat-v7:+"
+	// Android support v4
+	compile "com.android.support:support-v4:+"
 
 	// OkHttp
 	compile group: "com.squareup.okhttp", name: "okhttp", version: "2.1.+"
