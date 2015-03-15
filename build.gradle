@@ -11,7 +11,7 @@ buildscript {
 
 	dependencies {
 		// Android Gradle plugin.
-		classpath 'com.android.tools.build:gradle:0.11+'
+		classpath 'com.android.tools.build:gradle:+'
 	}
 }
 
@@ -25,14 +25,6 @@ android {
 
 		versionCode = "1"
 		versionName = "0.1"
-	}
-
-	sourceSets {
-		main {
-			manifest.srcFile "AndroidManifest.xml"
-			java.srcDirs = ["src"]
-			res.srcDirs = ["res"]
-		}
 	}
 
 	lintOptions {
