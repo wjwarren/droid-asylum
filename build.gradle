@@ -1,51 +1,51 @@
 task wrapper(type: Wrapper) {
-	gradleVersion = "1.11"
+    gradleVersion = "1.11"
 }
 
 apply plugin: "android-library"
 
 buildscript {
-	repositories {
-		mavenCentral()
-	}
+    repositories {
+        mavenCentral()
+    }
 
-	dependencies {
-		// Android Gradle plugin.
-		classpath 'com.android.tools.build:gradle:+'
-	}
+    dependencies {
+        // Android Gradle plugin.
+        classpath 'com.android.tools.build:gradle:+'
+    }
 }
 
 android {
-	compileSdkVersion 21
-	buildToolsVersion "21.1.2"
+    compileSdkVersion 21
+    buildToolsVersion "21.1.2"
 
-	defaultConfig {
-		minSdkVersion 8
-		targetSdkVersion 21
+    defaultConfig {
+        minSdkVersion 8
+        targetSdkVersion 21
 
-		versionCode = "1"
-		versionName = "0.1"
-	}
+        versionCode = "1"
+        versionName = "0.1"
+    }
 
-	lintOptions {
-		abortOnError false
-	}
+    lintOptions {
+        abortOnError false
+    }
 }
 
 repositories {
-	mavenCentral()
+    mavenCentral()
 }
 
 dependencies {
-	// Libs:
-	// Android support v4
-	compile "com.android.support:support-v4:+"
+    // Libs:
+    // Android support v4
+    compile "com.android.support:support-v4:+"
 
-	// OkHttp
-	compile group: "com.squareup.okhttp", name: "okhttp", version: "2.1.+"
-	// Otto
-	compile group: "com.squareup", name: "otto", version: "1.3.4"
+    // OkHttp
+    compile group: "com.squareup.okhttp", name: "okhttp", version: "2.1.+"
+    // Otto
+    compile group: "com.squareup", name: "otto", version: "1.3.4"
 
-	// JavaX
-	compile group: "javax.inject", name: "javax.inject", version: "1"
+    // JavaX
+    compile group: "javax.inject", name: "javax.inject", version: "1"
 }
