@@ -1,8 +1,9 @@
 task wrapper(type: Wrapper) {
-    gradleVersion = "1.11"
+    gradleVersion = "2.2.1"
 }
 
 apply plugin: "android-library"
+apply plugin: "org.robolectric"
 
 buildscript {
     repositories {
@@ -11,13 +12,19 @@ buildscript {
 
     dependencies {
         // Android Gradle plugin.
-        classpath 'com.android.tools.build:gradle:+'
+        classpath "com.android.tools.build:gradle:1.1.+"
+        // Robolectric
+        classpath "org.robolectric:robolectric-gradle-plugin:+"
     }
 }
 
 android {
     compileSdkVersion 21
     buildToolsVersion "21.1.2"
+
+    testOptions { 
+        unitTests.returnDefaultValues = true
+    }
 
     defaultConfig {
         minSdkVersion 8
@@ -37,6 +44,11 @@ repositories {
 }
 
 dependencies {
+    // Tests
+    testCompile "junit:junit:4.+"
+    testCompile "org.mockito:mockito-core:1.9.5"
+    testCompile "org.robolectric:robolectric:2.4"
+
     // Libs:
     // Android support v4
     compile "com.android.support:support-v4:+"

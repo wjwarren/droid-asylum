@@ -6,7 +6,6 @@ import android.widget.NumberPicker;
 
 /**
  * A {@link NumberPicker} that allows fractions.
- * TODO: TEST!!!
  * @author Wijnand
  */
 public class FloatPicker extends NumberPicker {
@@ -39,7 +38,7 @@ public class FloatPicker extends NumberPicker {
     /**
      * Initializes this class.
      */
-    private void init() {
+    protected void init() {
         mMinValue = 0;
         mMaxValue = 1;
         mStepSize = 1;
@@ -48,16 +47,9 @@ public class FloatPicker extends NumberPicker {
 
     /**
      * Generates the String Array of display values.<br/>
-     * The Array is generated based on the set min/max values and the step size.<br/>
-     * Minimum and maximum values will be automatically swapped if they are in the incorrect order.
+     * The Array is generated based on the set min/max values and the step size.
      */
-    private void generateDisplayValues() {
-        if (mMaxValue < mMinValue) {
-            float oldMin = mMinValue;
-            mMinValue = mMaxValue;
-            mMaxValue = oldMin;
-        }
-
+    protected String[] generateDisplayValues() {
         int totalSteps = (int) ((mMaxValue - mMinValue) / mStepSize) + 1;
         mDisplayValues = new String[totalSteps];
 
@@ -77,7 +69,7 @@ public class FloatPicker extends NumberPicker {
      * @param decimalPlaces int - Number of decimal places to use.
      * @return String - The formatted value.
      */
-    private String getFormattedValue(float value, int decimalPlaces) {
+    protected String getFormattedValue(float value, int decimalPlaces) {
         return String.format("%." + decimalPlaces + "f", value);
     }
 
@@ -89,17 +81,6 @@ public class FloatPicker extends NumberPicker {
     }
 
     /**
-     * Stores a new minimum value.
-     * @param value float - Minimum value.
-     */
-    public void setMinValue(float value) {
-        if (value != mMinValue) {
-            mMinValue = value;
-            generateDisplayValues();
-        }
-    }
-
-    /**
      * @return float - Maximum value.
      */
     public float getMaxValueAsFloat() {
@@ -107,14 +88,30 @@ public class FloatPicker extends NumberPicker {
     }
 
     /**
-     * Stores a new maximum value.
-     * @param value float - Maximum value.
+     * Stores new minimum and maximum values.<br/>
+     * Minimum and maximum values will be automatically swapped if they are in the incorrect order.
+     * @param min float - Minimum value.
+     * @param max float - Maximum value.
+     * @throws IllegalArgumentException When step {@code min} == {@code max}.
      */
-    public void setMaxValue(float value) {
-        if (value != mMaxValue) {
-            mMaxValue = value;
-            generateDisplayValues();
+    public void setMinMaxValues(float min, float max) {
+        if (mMinValue == min && mMaxValue == max) {
+            return;
         }
+
+        if (min == max) {
+            throw new IllegalArgumentException("Min == max!");
+        }
+
+        if (max < min) {
+            mMinValue = max;
+            mMaxValue = min;
+        } else {
+            mMinValue = min;
+            mMaxValue = max;
+        }
+
+        setCustomDisplayValues(generateDisplayValues());
     }
 
     /**
@@ -125,18 +122,18 @@ public class FloatPicker extends NumberPicker {
     }
 
     /**
-     * Stores a new step size.<br/>
-     * NOTE: value should be > 0.
+     * Stores a new step size.
      * @param value float - Step size.
+     * @throws IllegalArgumentException When step size <= 0.
      */
     public void setStepSize(float value) {
-        if (value == 0) {
+        if (value <= 0) {
             throw new IllegalArgumentException("Step size should be > 0.");
         }
 
         if (value != mStepSize) {
-            mStepSize = Math.abs(value);
-            generateDisplayValues();
+            mStepSize = value;
+            setCustomDisplayValues(generateDisplayValues());
         }
     }
 
