@@ -59,9 +59,29 @@ public class FloatPicker extends NumberPicker {
             mDisplayValues[i] = getFormattedValue(value, mDecimalPlaces);
         }
 
-        setDisplayedValues(mDisplayValues);
-        setMinValue(0);
-        setMaxValue(totalSteps - 1);
+        return mDisplayValues;
+    }
+
+    /**
+     * Sets the new set of custom display values.
+     * @param values String[] - The new display values.
+     */
+    protected void setCustomDisplayValues(String[] values) {
+        // Fun NumberPicker behaviour causing ArrayIndexOutOfBoundsException: http://stackoverflow.com/a/20867948
+        int oldMax = getMaxValue();
+        int newMax = values.length - 1;
+
+        if (newMax > oldMax) {
+            setMinValue(0);
+            setValue(0);
+            setDisplayedValues(values);
+            setMaxValue(newMax);
+        } else {
+            setMinValue(0);
+            setValue(0);
+            setMaxValue(newMax);
+            setDisplayedValues(values);
+        }
     }
 
     /**
@@ -151,7 +171,7 @@ public class FloatPicker extends NumberPicker {
     public void setDecimalPlaces(int value) {
         if (value != mDecimalPlaces) {
             mDecimalPlaces = Math.abs(value);
-            generateDisplayValues();
+            setCustomDisplayValues(generateDisplayValues());
         }
     }
 
