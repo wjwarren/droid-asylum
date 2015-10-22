@@ -38,6 +38,6 @@ public class FloatPickerForTesting extends FloatPicker {
 
         setMinValue(0);
         setMaxValue(newMax);
-        setDisplayedValues(values);
+        storeDisplayValues(values);
     }
 }

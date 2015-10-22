@@ -5,10 +5,10 @@ import android.util.AttributeSet;
 import android.widget.NumberPicker;
 
 /**
- * A {@link NumberPicker} that allows fractions.
+ * An {@link ObjectPicker} that allows fractions.
  * @author Wijnand
  */
-public class FloatPicker extends NumberPicker {
+public class FloatPicker extends ObjectPicker<Float> {
 
     private float mMinValue;
     private float mMaxValue;
@@ -16,6 +16,7 @@ public class FloatPicker extends NumberPicker {
     private int mDecimalPlaces;
 
     private String[] mDisplayValues;
+    private Float[] mFloatValues;
 
     /**
      * @see NumberPicker#NumberPicker
@@ -52,36 +53,16 @@ public class FloatPicker extends NumberPicker {
     protected String[] generateDisplayValues() {
         int totalSteps = (int) ((mMaxValue - mMinValue) / mStepSize) + 1;
         mDisplayValues = new String[totalSteps];
+        mFloatValues = new Float[totalSteps];
 
         float value;
         for (int i = 0; i < totalSteps; i++) {
             value = mMinValue + i * mStepSize;
             mDisplayValues[i] = getFormattedValue(value, mDecimalPlaces);
+            mFloatValues[i] = value;
         }
 
         return mDisplayValues;
-    }
-
-    /**
-     * Sets the new set of custom display values.
-     * @param values String[] - The new display values.
-     */
-    protected void setCustomDisplayValues(String[] values) {
-        // Fun NumberPicker behaviour causing ArrayIndexOutOfBoundsException: http://stackoverflow.com/a/20867948
-        int oldMax = getMaxValue();
-        int newMax = values.length - 1;
-
-        if (newMax > oldMax) {
-            setMinValue(0);
-            setValue(0);
-            setDisplayedValues(values);
-            setMaxValue(newMax);
-        } else {
-            setMinValue(0);
-            setValue(0);
-            setMaxValue(newMax);
-            setDisplayedValues(values);
-        }
     }
 
     /**
@@ -131,7 +112,7 @@ public class FloatPicker extends NumberPicker {
             mMaxValue = max;
         }
 
-        setCustomDisplayValues(generateDisplayValues());
+        setDisplayedValues(generateDisplayValues(), mFloatValues);
     }
 
     /**
@@ -153,7 +134,7 @@ public class FloatPicker extends NumberPicker {
 
         if (value != mStepSize) {
             mStepSize = value;
-            setCustomDisplayValues(generateDisplayValues());
+            setDisplayedValues(generateDisplayValues(), mFloatValues);
         }
     }
 
@@ -171,7 +152,7 @@ public class FloatPicker extends NumberPicker {
     public void setDecimalPlaces(int value) {
         if (value != mDecimalPlaces) {
             mDecimalPlaces = Math.abs(value);
-            setCustomDisplayValues(generateDisplayValues());
+            setDisplayedValues(generateDisplayValues(), mFloatValues);
         }
     }
 
@@ -180,15 +161,10 @@ public class FloatPicker extends NumberPicker {
      * @return float - The float value of the selected item OR 0f if the item can't be parsed.
      */
     public float getValueAsFloat() {
-        float value = 0f;
-        int position = getValue();
+        Float value = getTypedValue();
 
-        if (mDisplayValues != null && position < mDisplayValues.length) {
-            try {
-                value = Float.valueOf(mDisplayValues[position]);
-            } catch (NumberFormatException nfe) {
-                // Do nothing.
-            }
+        if (value == null) {
+            value = 0f;
         }
 
         return value;
@@ -198,20 +174,6 @@ public class FloatPicker extends NumberPicker {
      * @see #setValue(int)
      */
     public void setValue(float target) {
-        if (mDisplayValues == null) {
-            return;
-        }
-
-        String formattedTarget = getFormattedValue(target, mDecimalPlaces);
-        String value;
-        for (int i = 0; i < mDisplayValues.length; i++) {
-            value = mDisplayValues[i];
-
-            if (formattedTarget.equals(value)) {
-                setValue(i);
-                break;
-            }
-        }
+        super.setValue(target);
     }
-
 }
