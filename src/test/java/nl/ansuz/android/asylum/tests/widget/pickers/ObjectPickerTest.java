@@ -1,14 +1,12 @@
 package nl.ansuz.android.asylum.tests.widget.pickers;
 
-import android.os.Build;
 import nl.ansuz.android.asylum.widget.pickers.ObjectPicker;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import org.robolectric.Robolectric;
 import org.robolectric.RobolectricTestRunner;
-import org.robolectric.annotation.Config;
+import org.robolectric.shadows.ShadowContentProvider;
 
 import static org.hamcrest.CoreMatchers.nullValue;
 
@@ -16,7 +14,6 @@ import static org.hamcrest.CoreMatchers.nullValue;
  * Tests the {@link ObjectPicker} class.
  * @author Wijnand
  */
-@Config(emulateSdk = Build.VERSION_CODES.JELLY_BEAN_MR2)
 @RunWith(RobolectricTestRunner.class)
 public class ObjectPickerTest {
 
@@ -49,7 +46,7 @@ public class ObjectPickerTest {
      */
     @Before
     public void setUp() {
-        mPicker = new ObjectPickerForTesting<>(Robolectric.getShadowApplication().getApplicationContext());
+        mPicker = new ObjectPickerForTesting<>(new ShadowContentProvider().getContext());
     }
 
     /**

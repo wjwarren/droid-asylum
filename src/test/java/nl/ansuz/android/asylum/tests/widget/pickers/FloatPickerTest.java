@@ -6,9 +6,8 @@ import nl.ansuz.android.asylum.widget.pickers.FloatPicker;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import org.robolectric.Robolectric;
 import org.robolectric.RobolectricTestRunner;
-import org.robolectric.annotation.Config;
+import org.robolectric.shadows.ShadowContentProvider;
 
 import static org.hamcrest.Matchers.equalTo;
 
@@ -16,7 +15,6 @@ import static org.hamcrest.Matchers.equalTo;
  * Tests for the {@link FloatPicker} class.
  * @author wijnand
  */
-@Config(emulateSdk = Build.VERSION_CODES.JELLY_BEAN_MR2)
 @RunWith(RobolectricTestRunner.class)
 public class FloatPickerTest {
 
@@ -43,7 +41,7 @@ public class FloatPickerTest {
      */
     @Before
     public void setUp() {
-        mPicker = new FloatPickerForTesting(Robolectric.getShadowApplication().getApplicationContext());
+        mPicker = new FloatPickerForTesting(new ShadowContentProvider().getContext());
     }
 
     /**
