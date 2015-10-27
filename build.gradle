@@ -3,6 +3,7 @@ task wrapper(type: Wrapper) {
 }
 
 apply plugin: "com.android.library"
+apply from: "jacoco.gradle"
 
 buildscript {
     repositories {
@@ -20,7 +21,13 @@ android {
     buildToolsVersion "21.1.2"
 
     testOptions { 
-        unitTests.returnDefaultValues = true
+        unitTests {
+            returnDefaultValues = true
+
+            all {
+                include "**/*Test.class"
+            }
+        }
     }
 
     defaultConfig {
@@ -31,8 +38,18 @@ android {
         versionName = "0.1"
     }
 
+    buildTypes {
+        debug {
+            testCoverageEnabled true
+        }
+    }
+
     lintOptions {
         abortOnError false
+    }
+
+    sourceSets {
+        androidTest.setRoot("src/test")
     }
 }
 
