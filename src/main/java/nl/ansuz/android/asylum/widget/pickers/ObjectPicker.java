@@ -1,6 +1,5 @@
 package nl.ansuz.android.asylum.widget.pickers;
 
-import android.annotation.TargetApi;
 import android.content.Context;
 import android.util.AttributeSet;
 import android.widget.NumberPicker;
@@ -24,14 +23,7 @@ public class ObjectPicker<T> extends NumberPicker {
      * @see NumberPicker#NumberPicker
      */
     public ObjectPicker(Context context, AttributeSet attrs) {
-        this(context, attrs, 0);
-    }
-
-    /**
-     * @see NumberPicker#NumberPicker
-     */
-    public ObjectPicker(Context context, AttributeSet attrs, int defStyleAttr) {
-        super(context, attrs, defStyleAttr);
+        super(context, attrs);
     }
 
     /**
