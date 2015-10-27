@@ -7,7 +7,6 @@ import android.widget.NumberPicker;
 
 /**
  * A {@link NumberPicker} that displays any object.
- * TODO: Test!
  * @author Wijnand
  */
 public class ObjectPicker<T> extends NumberPicker {
@@ -18,14 +17,14 @@ public class ObjectPicker<T> extends NumberPicker {
      * @see NumberPicker#NumberPicker
      */
     public ObjectPicker(Context context) {
-        super(context);
+        this(context, null);
     }
 
     /**
      * @see NumberPicker#NumberPicker
      */
     public ObjectPicker(Context context, AttributeSet attrs) {
-        super(context, attrs);
+        this(context, attrs, 0);
     }
 
     /**
@@ -33,14 +32,6 @@ public class ObjectPicker<T> extends NumberPicker {
      */
     public ObjectPicker(Context context, AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
-    }
-
-    /**
-     * @see NumberPicker#NumberPicker
-     */
-    @TargetApi(21)
-    public ObjectPicker(Context context, AttributeSet attrs, int defStyleAttr, int defStyleRes) {
-        super(context, attrs, defStyleAttr, defStyleRes);
     }
 
     /**

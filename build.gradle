@@ -62,6 +62,7 @@ dependencies {
     testCompile "junit:junit:4.+"
     testCompile "org.mockito:mockito-core:1.9.5"
     testCompile "org.robolectric:robolectric:2.4"
+    testCompile "org.hamcrest:java-hamcrest:+"
 
     // Libs:
     // Android support v4

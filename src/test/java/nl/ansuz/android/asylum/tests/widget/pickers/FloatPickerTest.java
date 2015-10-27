@@ -1,7 +1,7 @@
 package nl.ansuz.android.asylum.tests.widget.pickers;
 
 import android.os.Build;
-import junit.framework.Assert;
+import org.junit.Assert;
 import nl.ansuz.android.asylum.widget.pickers.FloatPicker;
 import org.junit.Before;
 import org.junit.Test;
@@ -9,6 +9,8 @@ import org.junit.runner.RunWith;
 import org.robolectric.Robolectric;
 import org.robolectric.RobolectricTestRunner;
 import org.robolectric.annotation.Config;
+
+import static org.hamcrest.Matchers.equalTo;
 
 /**
  * Tests for the {@link FloatPicker} class.
@@ -20,22 +22,12 @@ public class FloatPickerTest {
 
     private static final float MIN_VALUE = 5f;
     private static final float MAX_VALUE = 11.5f;
-    private static final float TEST_VALUE = 8.5f;
     private static final float STEP_SIZE = .5f;
     private static final int DECIMAL_PLACES = 2;
-    private static final String[] EXPECTED_DISPLAY_VALUES = new String[]{
-            "5.00", "5.50",
-            "6.00", "6.50",
-            "7.00", "7.50",
-            "8.00", "8.50",
-            "9.00", "9.50",
-            "10.00", "10.50",
-            "11.00", "11.50",
-    };
 
     private static final float ILLEGAL_STEP_SIZE = -1f;
 
-    private FloatPickerForTesting mPicker;
+    private FloatPicker mPicker;
 
     /**
      * Populates the {@link FloatPicker} with test values.
@@ -55,22 +47,26 @@ public class FloatPickerTest {
     }
 
     /**
-     * Given a new picker has been created.<br/>
-     * When no changes have been made.<br/>
-     * Then the default values should be set.<br/>
+     * Given a new picker has been created.<br />
+     * When no changes have been made.<br />
+     * Then the default values should be set.
      */
     @Test
     public void defaultValuesAreSet() {
-        Assert.assertEquals("Incorrect default min value,", 0f, mPicker.getMinValueAsFloat());
-        Assert.assertEquals("Incorrect default max value,", 1f, mPicker.getMaxValueAsFloat());
-        Assert.assertEquals("Incorrect default step size,", 1f, mPicker.getStepSizeAsFloat());
-        Assert.assertEquals("Incorrect default value,", 0f, mPicker.getValueAsFloat());
+        Assert.assertEquals("Incorrect default min value,",
+                0f, mPicker.getMinValueAsFloat(), ObjectPickerTest.ACCEPTABLE_DELTA);
+        Assert.assertEquals("Incorrect default max value,",
+                1f, mPicker.getMaxValueAsFloat(), ObjectPickerTest.ACCEPTABLE_DELTA);
+        Assert.assertEquals("Incorrect default step size,",
+                1f, mPicker.getStepSizeAsFloat(), ObjectPickerTest.ACCEPTABLE_DELTA);
+        Assert.assertEquals("Incorrect default value,", 0f,
+                mPicker.getValueAsFloat(), ObjectPickerTest.ACCEPTABLE_DELTA);
     }
 
     /**
-     * Given a new picker has been created.<br/>
-     * When trying to set an incorrect step size.<br/>
-     * Then the an {@link IllegalArgumentException} should be thrown.<br/>
+     * Given a new picker has been created.<br />
+     * When trying to set an incorrect step size.<br />
+     * Then the an {@link IllegalArgumentException} should be thrown.
      */
     @Test(expected = IllegalArgumentException.class)
     public void incorrectStepSizeThrowsError() {
@@ -78,9 +74,9 @@ public class FloatPickerTest {
     }
 
     /**
-     * Given a new picker has been created.<br/>
-     * When trying to set equal minimum and maximum values.<br/>
-     * Then the an {@link IllegalArgumentException} should be thrown.<br/>
+     * Given a new picker has been created.<br />
+     * When trying to set equal minimum and maximum values.<br />
+     * Then the an {@link IllegalArgumentException} should be thrown.
      */
     @Test(expected = IllegalArgumentException.class)
     public void incorrectMinMaxThrowsError() {
@@ -88,42 +84,104 @@ public class FloatPickerTest {
     }
 
     /**
-     * Given a new picker has been created.<br/>
-     * When the picker has been populated with testing values.<br/>
-     * Then the minimum value should be set correctly.<br/>
+     * Given a new picker has been created AND populated with values.<br />
+     * When trying to set the same minimum and maximum values again.<br />
+     * Then this action should be ignored.
+     */
+    @Test
+    public void settingSameMinMaxValuesAgainAreIgnored() {
+        populatePicker();
+        Assert.assertFalse("No new values should be stored.", mPicker.setMinMaxValues(MIN_VALUE, MAX_VALUE));
+    }
+
+    /**
+     * Given a new picker has been created AND populated with values.<br />
+     * When trying to set a minimum value that is larger than the maximum value.<br />
+     * Then the minimum and maximum values should be swapped.
+     */
+    @Test
+    public void minMaxAreSwappedWhenPassedIncorrectly() {
+        populatePicker();
+        mPicker.setMinMaxValues(MAX_VALUE, MIN_VALUE);
+
+        Assert.assertThat("Incorrect min value.", mPicker.getMinValueAsFloat(), equalTo(MIN_VALUE));
+        Assert.assertThat("Incorrect max value.", mPicker.getMaxValueAsFloat(), equalTo(MAX_VALUE));
+    }
+
+    /**
+     * Given a new picker has been created.<br />
+     * When the picker has been populated with testing values.<br />
+     * Then the minimum value should be set correctly.
      */
     @Test
     public void minValueIsSet() {
         populatePicker();
-        Assert.assertEquals("Incorrect min value,", MIN_VALUE, mPicker.getMinValueAsFloat());
+        Assert.assertEquals("Incorrect min value,",
+                MIN_VALUE, mPicker.getMinValueAsFloat(), ObjectPickerTest.ACCEPTABLE_DELTA);
     }
 
     /**
-     * Given a new picker has been created.<br/>
-     * When the picker has been populated with testing values.<br/>
-     * Then the maximum value should be set correctly.<br/>
+     * Given a new picker has been created.<br />
+     * When the picker has been populated with testing values.<br />
+     * Then the maximum value should be set correctly.
      */
     @Test
     public void maxValueIsSet() {
         populatePicker();
-        Assert.assertEquals("Incorrect max value,", MAX_VALUE, mPicker.getMaxValueAsFloat());
+        Assert.assertEquals("Incorrect max value,",
+                MAX_VALUE, mPicker.getMaxValueAsFloat(), ObjectPickerTest.ACCEPTABLE_DELTA);
     }
 
     /**
-     * Given a new picker has been created.<br/>
-     * When the picker has been populated with testing values.<br/>
-     * Then the step size value should be set correctly.<br/>
+     * Given a new picker has been created.<br />
+     * When the picker has been populated with testing values.<br />
+     * Then the step size value should be set correctly.
      */
     @Test
     public void stepSizeValueIsSet() {
         populatePicker();
-        Assert.assertEquals("Incorrect step size,", STEP_SIZE, mPicker.getStepSizeAsFloat());
+        Assert.assertEquals("Incorrect step size,",
+                STEP_SIZE, mPicker.getStepSizeAsFloat(), ObjectPickerTest.ACCEPTABLE_DELTA);
     }
 
     /**
-     * Given a new picker has been created.<br/>
-     * When the picker has been populated with testing values.<br/>
-     * Then the generated display values should be generated correctly.<br/>
+     * Given a new picker has been created AND populated with values.<br />
+     * When trying to set the step size again.<br />
+     * Then this action should be ignored.
+     */
+    @Test
+    public void settingSameStepSizeIsIgnored() {
+        populatePicker();
+        Assert.assertFalse("No new value should be stored.", mPicker.setStepSize(STEP_SIZE));
+    }
+
+    /**
+     * Given a new picker has been created AND populated with values.<br />
+     * When trying to set the same decimal places again.<br />
+     * Then this action should be ignored.
+     */
+    @Test
+    public void settingSameDecimalPlacesIsIgnored() {
+        populatePicker();
+        Assert.assertFalse("No new value should be stored.", mPicker.setDecimalPlaces(DECIMAL_PLACES));
+    }
+
+    /**
+     * Given a new picker has been created AND populated with values.<br />
+     * When trying to set a negative number of decimal places.<br />
+     * Then the absolute value should be used for the decimal places.
+     */
+    @Test
+    public void setNegativeDecimalPlaces() {
+        populatePicker();
+        mPicker.setDecimalPlaces(DECIMAL_PLACES * -1);
+        Assert.assertThat("Incorrect decimal places.", mPicker.getDecimalPlaces(), equalTo(DECIMAL_PLACES));
+    }
+
+    /**
+     * Given a new picker has been created.<br />
+     * When the picker has been populated with testing values.<br />
+     * Then the generated display values should be generated correctly.
      */
     @Test
     public void correctDisplayValuesAreGenerated() {
@@ -132,13 +190,13 @@ public class FloatPickerTest {
 
         Assert.assertNotNull("Displayed values should not be empty!", generatedValues);
         Assert.assertEquals("Incorrect display values list length,",
-                EXPECTED_DISPLAY_VALUES.length,
+                ObjectPickerTest.EXPECTED_DISPLAY_VALUES.length,
                 generatedValues.length);
 
         String expected;
         String actual;
-        for (int i = 0; i < EXPECTED_DISPLAY_VALUES.length; i++) {
-            expected = EXPECTED_DISPLAY_VALUES[i];
+        for (int i = 0; i < ObjectPickerTest.EXPECTED_DISPLAY_VALUES.length; i++) {
+            expected = ObjectPickerTest.EXPECTED_DISPLAY_VALUES[i];
             actual = generatedValues[i];
 
             Assert.assertEquals("Incorrect display value, ", expected, actual);
@@ -146,16 +204,17 @@ public class FloatPickerTest {
     }
 
     /**
-     * Given a new picker has been created.<br/>
-     * When the picker has been populated with testing values and a value has been selected.<br/>
-     * Then the selected value should be returned correctly.<br/>
+     * Given a new picker has been created
+     *  AND populated with a list of values
+     *  AND a value has been selected.<br />
+     * When requesting the set value.<br />
+     * Then the correct value should be returned.
      */
     @Test
     public void valueIsSet() {
         populatePicker();
-        mPicker.setValue(TEST_VALUE);
-
-        Assert.assertEquals("Incorrect value,", TEST_VALUE, mPicker.getValueAsFloat());
+        mPicker.setValue(ObjectPickerTest.TEST_VALUE);
+        Assert.assertEquals("Incorrect value.",
+                ObjectPickerTest.TEST_VALUE, mPicker.getValueAsFloat(), ObjectPickerTest.ACCEPTABLE_DELTA);
     }
-
 }

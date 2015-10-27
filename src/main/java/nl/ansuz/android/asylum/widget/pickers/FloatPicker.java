@@ -93,18 +93,15 @@ public class FloatPicker extends ObjectPicker<Float> {
      * Minimum and maximum values will be automatically swapped if they are in the incorrect order.
      * @param min float - Minimum value.
      * @param max float - Maximum value.
+     * @return Whether new min/max have been stored.
      * @throws IllegalArgumentException When step {@code min} == {@code max}.
      */
-    public void setMinMaxValues(float min, float max) {
+    public boolean setMinMaxValues(float min, float max) {
         if (mMinValue == min && mMaxValue == max) {
-            return;
-        }
-
-        if (min == max) {
+            return false;
+        } else if (min == max) {
             throw new IllegalArgumentException("Min == max!");
-        }
-
-        if (max < min) {
+        } else if (max < min) {
             mMinValue = max;
             mMaxValue = min;
         } else {
@@ -113,6 +110,7 @@ public class FloatPicker extends ObjectPicker<Float> {
         }
 
         setDisplayedValues(generateDisplayValues(), mFloatValues);
+        return true;
     }
 
     /**
@@ -125,17 +123,21 @@ public class FloatPicker extends ObjectPicker<Float> {
     /**
      * Stores a new step size.
      * @param value float - Step size.
+     * @return Whether the step size has changed.
      * @throws IllegalArgumentException When step size <= 0.
      */
-    public void setStepSize(float value) {
+    public boolean setStepSize(float value) {
+        boolean changed = false;
+
         if (value <= 0) {
             throw new IllegalArgumentException("Step size should be > 0.");
-        }
-
-        if (value != mStepSize) {
+        } else if (value != mStepSize) {
             mStepSize = value;
             setDisplayedValues(generateDisplayValues(), mFloatValues);
+            changed = true;
         }
+
+        return changed;
     }
 
     /**
@@ -148,12 +150,18 @@ public class FloatPicker extends ObjectPicker<Float> {
     /**
      * Store a new number of decimal places to use.
      * @param value int - The number of decimal places to use for display.
+     * @return Whether the decimal places has changed.
      */
-    public void setDecimalPlaces(int value) {
+    public boolean setDecimalPlaces(int value) {
+        boolean changed = false;
+
         if (value != mDecimalPlaces) {
             mDecimalPlaces = Math.abs(value);
             setDisplayedValues(generateDisplayValues(), mFloatValues);
+            changed = true;
         }
+
+        return changed;
     }
 
     /**
