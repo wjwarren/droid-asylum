@@ -23,5 +23,5 @@ before_install:
 script: ./gradlew testDebugUnitTestCoverage
 
 after_success:
-    - cp ~/build/reports/jacoco/testDebugUnitTestCoverage/testDebugUnitTestCoverage.xml ~/build/reports/jacoco/test/jacocoTestReport.xml
+    - cp ~/build/wjwarren/droid-asylum/build/reports/jacoco/testDebugUnitTestCoverage/testDebugUnitTestCoverage.xml ~/build/wjwarren/droid-asylum/build/reports/jacoco/test/jacocoTestReport.xml
     - ./gradlew coveralls
