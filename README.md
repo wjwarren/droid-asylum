@@ -1,3 +1,6 @@
+[![Build Status](https://travis-ci.org/wjwarren/droid-asylum.svg)](https://travis-ci.org/wjwarren/droid-asylum)
+[![Coverage Status](https://coveralls.io/repos/wjwarren/droid-asylum/badge.svg?service=github)](https://coveralls.io/github/wjwarren/droid-asylum)
+
 droid-asylum
 ============
 
